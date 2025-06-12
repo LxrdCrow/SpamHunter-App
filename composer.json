@@ -1,0 +1,16 @@
+{
+    "name": "federico/spam-hunter",
+    "type": "dumb-autoload",
+    "autoload": {
+        "psr-4": {
+            "Federico\\SpamHunter\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Federico",
+            "email": "federico.grasso606@gmail.com"
+        }
+    ],
+    "require": {}
+}
