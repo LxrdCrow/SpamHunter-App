@@ -43,6 +43,6 @@ SpamHunter is a simple logic game built with PHP and MySQL, where the user needs
 
 ## Work in Progress
 
-Currently coding and building the initial models (e.g., `User.php`).
+Review models
 
 

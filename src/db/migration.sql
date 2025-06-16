@@ -10,8 +10,12 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS game_session (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
+    game_id INT NOT NULL, -- ID del gioco a cui appartiene la sessione
     game_data JSON NOT NULL,
     history_data JSON, -- opzionale, per salvare stati precedenti
+    status ENUM('active', 'completed', 'abandoned') NOT NULL DEFAULT 'active',
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ended_at TIMESTAMP NULL, -- può essere NULL se la sessione è ancora attiva
     game_point JSON,   -- se usato nel contesto della storia
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
