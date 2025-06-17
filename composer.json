@@ -12,5 +12,7 @@
             "email": "federico.grasso606@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "nesbot/carbon": "^3.10"
+    }
 }

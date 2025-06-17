@@ -1,75 +1,121 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+namespace App\Models;
+
 use Carbon\Carbon;
 
-class GameSession extends Model
+class GameSession
 {
-    protected $table = 'game_session';
+    private int $userId;
+    private int $gameId;
+    private ?string $gameData;
+    private ?string $historyData;
+    private ?float $gamePoint;
+    private int $status;
+    private ?Carbon $startedAt;
+    private ?Carbon $endedAt;
 
-    protected $fillable = [
-        'user_id',
-        'game_id',
-        'game_data',
-        'history_data',
-        'game_point',
-        'status',
-        'started_at',
-        'ended_at',
-    ];
-
-    // RELAZIONS
-    /**
-     * The user who owns the game session.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */ 
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
+    public function __construct(
+        int $userId,
+        int $gameId,
+        ?string $gameData = null,
+        ?string $historyData = null,
+        ?float $gamePoint = null,
+        int $status = 0,
+        ?string $startedAt = null,
+        ?string $endedAt = null
+    ) {
+        $this->userId = $userId;
+        $this->gameId = $gameId;
+        $this->gameData = $gameData;
+        $this->historyData = $historyData;
+        $this->gamePoint = $gamePoint;
+        $this->status = $status;
+        $this->startedAt = $startedAt ? Carbon::parse($startedAt) : null;
+        $this->endedAt = $endedAt ? Carbon::parse($endedAt) : null;
     }
 
-    public function game(): BelongsTo
+    // Getters e setters
+
+    public function getUserId(): int
     {
-        return $this->belongsTo(Game::class, 'game_id');
+        return $this->userId;
     }
 
-    public function scores(): HasMany
+    public function setUserId(int $userId): void
     {
-        return $this->hasMany(GameSessionScore::class, 'session_id');
+        $this->userId = $userId;
     }
 
-    public function actions(): HasMany
+    public function getGameId(): int
     {
-        return $this->hasMany(GameAction::class, 'session_id');
+        return $this->gameId;
     }
 
-    // ACCESSOR / MUTATOR
-
-    public function getStartedAt()
+    public function setGameId(int $gameId): void
     {
-        return Carbon::parse($this->attributes['started_at'])->format('Y-m-d H:i:s');
+        $this->gameId = $gameId;
     }
 
-    public function setStartedAt($value)
+    public function getGameData(): ?string
     {
-        $this->attributes['started_at'] = Carbon::parse($value)->toDateTimeString();
+        return $this->gameData;
     }
 
-    public function getEndedAt()
+    public function setGameData(?string $gameData): void
     {
-        return $this->attributes['ended_at'] 
-            ? Carbon::parse($this->attributes['ended_at'])->format('Y-m-d H:i:s')
-            : null;
+        $this->gameData = $gameData;
     }
 
-    public function setEndedAt($value)
+    public function getHistoryData(): ?string
     {
-        $this->attributes['ended_at'] = $value 
-            ? Carbon::parse($value)->toDateTimeString()
-            : null;
+        return $this->historyData;
+    }
+
+    public function setHistoryData(?string $historyData): void
+    {
+        $this->historyData = $historyData;
+    }
+
+    public function getGamePoint(): ?string
+    {
+        return $this->gamePoint !== null ? number_format($this->gamePoint, 2, '.', '') : null;
+    }
+
+
+    public function setGamePoint(?float $gamePoint): void
+    {
+        $this->gamePoint = $gamePoint;
+    }
+
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function getStartedAt(): ?string
+    {
+        return $this->startedAt ? $this->startedAt->format('Y-m-d H:i:s') : null;
+    }
+
+    public function setStartedAt(?string $startedAt): void
+    {
+        $this->startedAt = $startedAt ? Carbon::parse($startedAt) : null;
+    }
+
+    public function getEndedAt(): ?string
+    {
+        return $this->endedAt ? $this->endedAt->format('Y-m-d H:i:s') : null;
+    }
+
+    public function setEndedAt(?string $endedAt): void
+    {
+        $this->endedAt = $endedAt ? Carbon::parse($endedAt) : null;
     }
 }
+

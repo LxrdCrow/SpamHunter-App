@@ -1,38 +1,49 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-
-// Response Model
-
-class Response extends Model
+class Response
 {
-    protected $table = 'responses';
+    public int $session_id;
+    public string $response_data;
+    public string $created_at;
+    public string $updated_at;
 
-    protected $fillable = [
-        'session_id',
-        'response_data',
-        'created_at',
-        'updated_at',
-    ];
-
-    public function getCreatedAtAttribute($value)
+    public function __construct(array $data = [])
     {
-        return \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
+        $this->session_id = isset($data['session_id']) ? (int)$data['session_id'] : 0;
+        $this->response_data = $data['response_data'] ?? '';
+        $this->created_at = $data['created_at'] ?? date('Y-m-d H:i:s');
+        $this->updated_at = $data['updated_at'] ?? date('Y-m-d H:i:s');
+    }
+    
+    public function getCreatedAtFormatted(): string
+    {
+        $dt = new DateTime($this->created_at);
+        return $dt->format('Y-m-d H:i:s');
     }
 
-    public function setCreatedAtAttribute($value)
+    public function getUpdatedAtFormatted(): string
     {
-        $this->attributes['created_at'] = \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
+        $dt = new DateTime($this->updated_at);
+        return $dt->format('Y-m-d H:i:s');
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function setCreatedAt(string $date): void
     {
-        return \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
+        $this->created_at = date('Y-m-d H:i:s', strtotime($date));
     }
-
-    public function setUpdatedAtAttribute($value)
+    public function setUpdatedAt(string $date): void
     {
-        $this->attributes['updated_at'] = \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
+        $this->updated_at = date('Y-m-d H:i:s', strtotime($date));
+    }
+    public function toArray(): array
+    {
+        return [
+            'session_id' => $this->session_id,
+            'response_data' => $this->response_data,
+            'created_at' => $this->getCreatedAtFormatted(),
+            'updated_at' => $this->getUpdatedAtFormatted(),
+        ];
     }
 }
+
 

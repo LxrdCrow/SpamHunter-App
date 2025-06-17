@@ -1,57 +1,68 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+namespace App\Models;
+
 use Carbon\Carbon;
 
-class GameSessionScore extends Model
+class GameSessionScore
 {
-    protected $table = 'game_session_scores';
+    private int $sessionId;
+    private float $score;
+    private ?Carbon $createdAt;
+    private ?Carbon $updatedAt;
 
-    protected $fillable = [
-        'session_id',
-        'score',
-        'created_at',
-        'updated_at',
-    ];
-
-    public function session(): BelongsTo
-    {
-        return $this->belongsTo(GameSession::class, 'session_id');
+    public function __construct(
+        int $sessionId,
+        float $score,
+        ?string $createdAt = null,
+        ?string $updatedAt = null
+    ) {
+        $this->sessionId = $sessionId;
+        $this->setScore($score);
+        $this->createdAt = $createdAt ? Carbon::parse($createdAt) : null;
+        $this->updatedAt = $updatedAt ? Carbon::parse($updatedAt) : null;
     }
 
-    public function getScoreAttribute($value)
+    public function getSessionId(): int
     {
-        return number_format($value, 2);
+        return $this->sessionId;
     }
 
-    public function setScoreAttribute($value)
+    public function setSessionId(int $sessionId): void
     {
-        $this->attributes['score'] = number_format($value, 2, '.', '');
+        $this->sessionId = $sessionId;
     }
 
-    public function getCreatedAtAttribute($value)
+    public function getScore(): string
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        // Restituisci il punteggio formattato con 2 decimali
+        return number_format($this->score, 2);
     }
 
-    public function setCreatedAtAttribute($value)
+    public function setScore(float $score): void
     {
-        $this->attributes['created_at'] = Carbon::parse($value)->format('Y-m-d H:i:s');
+        // Conserva il punteggio con 2 decimali, punto come separatore decimale
+        $this->score = (float) number_format($score, 2, '.', '');
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function getCreatedAt(): ?string
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        return $this->createdAt ? $this->createdAt->format('Y-m-d H:i:s') : null;
     }
 
-    public function setUpdatedAtAttribute($value)
+    public function setCreatedAt(?string $createdAt): void
     {
-        $this->attributes['updated_at'] = Carbon::parse($value)->format('Y-m-d H:i:s');
+        $this->createdAt = $createdAt ? Carbon::parse($createdAt) : null;
     }
 
-    public function getSessionIdAttribute($value)
+    public function getUpdatedAt(): ?string
     {
-        return (int) $value;
+        return $this->updatedAt ? $this->updatedAt->format('Y-m-d H:i:s') : null;
+    }
+
+    public function setUpdatedAt(?string $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt ? Carbon::parse($updatedAt) : null;
     }
 }
+
