@@ -1,14 +1,24 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Models;
 
-use App\Models\Home;
-
-class HomeController
+class Home
 {
-    public function index()
+    private string $welcomeMessage;
+
+    public function __construct()
     {
-        $home = new Home();
-        echo $home->welcomeUser();
+        $this->welcomeMessage = "Welcome to the SpamHunter App!";
+    }
+
+    public function welcomeUser(): string
+    {
+        return $this->welcomeMessage;
+    }
+
+    public function getCurrentDate(): string
+    {
+        return date('d/m/Y');
     }
 }
+

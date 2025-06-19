@@ -1,8 +1,12 @@
 <?php
 
+use Dotenv\Dotenv;
+use App\Kernel;
+
 require __DIR__ . '/vendor/autoload.php';
 
-use App\Kernel;
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 class Application {
     public static function run(): void {

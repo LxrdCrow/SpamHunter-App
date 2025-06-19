@@ -35,13 +35,11 @@ class GameSessionScore
 
     public function getScore(): string
     {
-        // Restituisci il punteggio formattato con 2 decimali
         return number_format($this->score, 2);
     }
 
     public function setScore(float $score): void
     {
-        // Conserva il punteggio con 2 decimali, punto come separatore decimale
         $this->score = (float) number_format($score, 2, '.', '');
     }
 

@@ -1,1 +1,7 @@
 /vendor/
+/.env
+/log.txt
+/.idea/
+/.vscode/
+/*.log
+
