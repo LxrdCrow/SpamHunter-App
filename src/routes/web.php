@@ -78,9 +78,27 @@ switch ($segments[0]) {
         }
         break;
 
+        case 'phishing-email':
+    if ($method === 'GET' && !isset($segments[1])) {
+        (new PhishingController())->generate();
+    } elseif ($method === 'GET' && isset($segments[1]) && $segments[1] === 'all') {
+        (new PhishingController())->getAll();
+    } elseif ($method === 'POST' && isset($segments[1]) && $segments[1] === 'send') {
+        (new PhishingController())->send();
+    } elseif ($method === 'POST' && isset($segments[1]) && $segments[1] === 'save') {
+        (new PhishingController())->save();
+    } elseif ($method === 'DELETE' && isset($segments[1]) && $segments[1] === 'all') {
+        (new PhishingController())->deleteAll();
+    } else {
+        http_response_code(405);
+        echo json_encode(['error'=>'Method Not Allowed']);
+    }
+    break;
+
     default:
         http_response_code(404);
         echo json_encode(['error' => 'Route not found']);
         break;
+
 }
 

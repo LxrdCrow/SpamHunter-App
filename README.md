@@ -19,6 +19,7 @@ SpamHunter is a simple logic game built with PHP and MySQL, where the user needs
         HomeController.php
         SessionController.php
         ScoreController.php
+        PhishingController.php
 
     /db
         database.php
@@ -27,6 +28,8 @@ SpamHunter is a simple logic game built with PHP and MySQL, where the user needs
     /helpers
         ArrayHelper.php
         GameHelper.php
+        EmailTemplateHelper.php
+        StringHelper.php
 
     /models
         User.php
@@ -34,6 +37,7 @@ SpamHunter is a simple logic game built with PHP and MySQL, where the user needs
         GameSession.php
         GameSessionScore.php
         Response.php
+        PhishingEmail.php
 
 
     /routes
@@ -41,6 +45,7 @@ SpamHunter is a simple logic game built with PHP and MySQL, where the user needs
 
     /services
         GameLogicService.php
+        PhishingMailService.php
 
     index.php
     kernel.php
@@ -48,5 +53,5 @@ SpamHunter is a simple logic game built with PHP and MySQL, where the user needs
 
 ## Work in Progress
 
-Building game logic of "SpamHunter" with possible API or dataset
+Add Faker
 
