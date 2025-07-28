@@ -1,7 +1,11 @@
-/vendor/
-/.env
-/log.txt
-/.idea/
-/.vscode/
-/*.log
+# IDE/Editor settings
+.vscode/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+log.txt
+
 
